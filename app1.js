@@ -1,12 +1,11 @@
 function splitTreasure(treasure){
-	// sort the gems from biggest to the lowest
-	const sortGems = (a, b) => b - a;
-	const sortedTreasure = treasure.sort(sortGems);
-	console.log(sortedTreasure);
 	//If all the gems in the bag are the same, you can split it between treasure.length of seekers
-	if(sortedTreasure.every( (val, item, sortedTreasure) => val === sortedTreasure[0]) ){
+	if(treasure.every( (val, item, sortedTreasure) => val === sortedTreasure[0]) ){
 		console.log(`All the gems in the chest are the same, so you can split it between ${treasure.length} seekers!`);
 	} else {
+	// sort the gems from biggest to the lowest
+	const sortedTreasure = treasure.sort((a, b) => b - a);
+	console.log(sortedTreasure);
 	//set first gem (biggest) in the bag as a match case and the rest as the treasure that needs dividing
 	const [firstGem, ...treasureToBeDivided] = sortedTreasure;
 	//initialize a separate chest that will store all the shares
@@ -15,17 +14,19 @@ function splitTreasure(treasure){
 	treasureDivided.push([firstGem]);
 	//check for any duplicates, if found, push them in to main array
 	console.log(treasureToBeDivided);	
-	
+	let count = 0;
 	treasureToBeDivided.forEach((element, index) => {
 		if(element === treasureToBeDivided[0]){
 			console.log(`Pushing gem of value ${element} to the main array`);
 			treasureDivided.push([element]);
-			console.log(treasureToBeDivided);
-			treasureToBeDivided.splice(index, 1);
-			index--;
-			console.log(treasureToBeDivided);	
+			//treasureToBeDivided.splice(index, 1);
+			count++;
+			return count;
 		}
 	});
+	console.log(count);
+	treasureToBeDivided.splice(0, count);
+	
 	//await addShare function to return a full bag
 	addShare(treasureToBeDivided, treasureDivided);
 	console.log(treasureDivided);
